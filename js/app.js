@@ -156,6 +156,14 @@ function escapeHtml(s) {
 }
 
 // Dashboard rendering
+const WELCOME_QUOTES = [
+  'Every day is a fresh start — make today meaningful.',
+  'Small progress is still progress. Keep going!',
+  'Your future is created by what you do today, not tomorrow.',
+  'Great work starts with good habits and a positive mindset.',
+  'Focus on progress, not perfection. You are doing great.'
+];
+
 function renderDashboard() {
   const courses = Storage.getCourses();
   const assignments = Storage.getAssignments();
@@ -232,4 +240,11 @@ function renderDashboard() {
       </tr>`;
     }).join('') : `<tr><td colspan="4" class="text-center text-muted py-3">No assignments yet.</td></tr>`;
   }
+  renderWelcomeQuote();
 }
+
+function renderWelcomeQuote() {
+  const quoteEl = document.getElementById('welcomeQuote');
+  if (!quoteEl) return;
+  quoteEl.textContent = WELCOME_QUOTES[Math.floor(Math.random() * WELCOME_QUOTES.length)];
+} 
