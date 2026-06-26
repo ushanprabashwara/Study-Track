@@ -48,6 +48,14 @@ function renderLayout(title) {
         </ul>
       </div>
       <input type="file" id="importFile" accept="application/json" hidden>
+      <div class="topbar-notice" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>PLEASE USE THIS APPLICATION USING A SINGLE BROWSER (e.g., Chrome or Edge).</span>
+      </div>
+      <div class="topbar-notice topbar-notice-secondary" role="alert">
+        <i class="bi bi-display-fill"></i>
+        <span>DESKTOP VERSION ONLY. CURRENTLY MOBILE DEVICES ARE NOT SUPPORTED FOR THIS APPLICATION.</span>
+      </div>
     `;
   }
 
