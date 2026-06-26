@@ -36,7 +36,7 @@ function renderLayout(title) {
   const topbar = document.getElementById('topbar');
   if (topbar) {
     topbar.innerHTML = `
-      <button class="btn-icon menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+      <button class="btn-icon menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="sidebar"><i class="bi bi-list"></i></button>
       <h1>${title || ''}</h1>
       <div class="spacer"></div>
       <div class="dropdown">
@@ -65,10 +65,27 @@ function initMobileSidebar() {
     backdrop.className = 'sidebar-backdrop';
     document.body.appendChild(backdrop);
   }
-  const close = () => { side.classList.remove('open'); backdrop.classList.remove('show'); };
-  btn.addEventListener('click', () => { side.classList.toggle('open'); backdrop.classList.toggle('show'); });
+
+  const setOpen = (isOpen) => {
+    side.classList.toggle('open', isOpen);
+    backdrop.classList.toggle('show', isOpen);
+    document.body.classList.toggle('sidebar-open', isOpen);
+    btn.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  const close = () => setOpen(false);
+  const toggle = (e) => {
+    e.preventDefault();
+    setOpen(!side.classList.contains('open'));
+  };
+
+  btn.addEventListener('click', toggle);
+  btn.addEventListener('touchend', toggle);
   backdrop.addEventListener('click', close);
   side.querySelectorAll('a.nav-link').forEach(a => a.addEventListener('click', close));
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 991) close();
+  });
 }
 
 function initBackupMenu() {
