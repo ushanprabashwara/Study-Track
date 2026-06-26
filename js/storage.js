@@ -70,19 +70,5 @@ const Storage = {
 
 };
 
-// Seed sample data once
-(function seed() {
-  if (localStorage.getItem('sat_seeded')) return;
-  if (Storage.getCourses().length === 0) {
-    const c1 = Storage.addCourse({ name: 'Web Development', code: 'CS301', semester: 'Fall 2025', lecturer: 'Dr. Anderson' });
-    const c2 = Storage.addCourse({ name: 'Data Structures', code: 'CS210', semester: 'Fall 2025', lecturer: 'Prof. Khan' });
-    const c3 = Storage.addCourse({ name: 'Database Systems', code: 'CS320', semester: 'Fall 2025', lecturer: 'Dr. Lee' });
-    const today = new Date();
-    const day = (offset) => { const d = new Date(today); d.setDate(d.getDate() + offset); return d.toISOString().slice(0,10); };
-    Storage.addAssignment({ title: 'Portfolio Website', description: 'Build a responsive portfolio', courseId: c1.id, dueDate: day(2), priority: 'High', status: 'In Progress' });
-    Storage.addAssignment({ title: 'Linked List Lab', description: 'Implement doubly linked list', courseId: c2.id, dueDate: day(-1), priority: 'Medium', status: 'Not Started' });
-    Storage.addAssignment({ title: 'SQL Joins Quiz', description: 'Online quiz on JOINS', courseId: c3.id, dueDate: day(5), priority: 'Low', status: 'Completed' });
-    Storage.addAssignment({ title: 'Final Project Proposal', description: 'Write 2-page proposal', courseId: c1.id, dueDate: day(0), priority: 'High', status: 'Not Started' });
-  }
-  localStorage.setItem('sat_seeded', '1');
-})();
+// No automatic sample data is seeded for new visitors.
+// Users start with an empty tracker unless they add their own courses and assignments.
