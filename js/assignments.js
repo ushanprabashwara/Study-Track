@@ -87,23 +87,6 @@ function openAssignmentModal(id) {
   modal.show();
 }
 
-function exportCSV() {
-  const courses = Storage.getCourses();
-  const rows = [['Title','Description','Course','Due Date','Priority','Status']];
-  Storage.getAssignments().forEach(a => {
-    const c = courses.find(x => x.id === a.courseId);
-    rows.push([a.title, a.description || '', c?.name || '', a.dueDate, a.priority, a.status]);
-  });
-  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url; link.download = `assignments-${todayISO()}.csv`;
-  document.body.appendChild(link); link.click(); link.remove();
-  URL.revokeObjectURL(url);
-  toast('CSV exported', 'success');
-}
-
 function initAssignmentsPage() {
   // populate filter selects
   const courseFilter = document.getElementById('filterCourse');
@@ -120,7 +103,6 @@ function initAssignmentsPage() {
     if (!Storage.getCourses().length) { toast('Add a course first', 'warning'); return; }
     openAssignmentModal();
   });
-  document.getElementById('exportCsvBtn').addEventListener('click', exportCSV);
 
   document.getElementById('assignmentForm').addEventListener('submit', (e) => {
     e.preventDefault();
